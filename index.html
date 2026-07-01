@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Günaydın Özge ☀️</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  html, body { height:100%; overflow:hidden; }
+  body {
+    font-family:-apple-system, "SF Pro Display", "Segoe UI", sans-serif;
+    background:linear-gradient(180deg,#1c1740 0%,#4a2a5e 60%,#8a4a6e 100%);
+    color:#fff6ec; user-select:none; -webkit-user-select:none;
+    transition:background 1s;
+  }
+  body.day h1 { color:#8a4b1a; text-shadow:none; }
+  body.day .sub { color:#7a5535; }
+
+  #sun {
+    position:fixed; left:50%; bottom:-8vh; width:150px; height:150px; margin-left:-75px;
+    border-radius:50%; z-index:1; cursor:pointer;
+    background:radial-gradient(circle,#fff3b0 20%,#ffd166 55%,#ff9e4a 100%);
+    box-shadow:0 0 60px 20px rgba(255,190,90,.45);
+    transition:bottom .35s ease, transform .15s;
+    animation:sunPulse 1.6s ease-in-out infinite;
+  }
+  #sun:active { transform:scale(.94); }
+  @keyframes sunPulse {
+    0%,100% { box-shadow:0 0 60px 20px rgba(255,190,90,.45); }
+    50%     { box-shadow:0 0 90px 34px rgba(255,190,90,.7); }
+  }
+  /* güneş ekranında dokunuşlar güneşe geçsin, yazı ve butonlar tıklanabilir kalsın */
+  #s2 { pointer-events:none; }
+  #s2 > * { pointer-events:auto; }
+
+  .bird { position:fixed; font-size:1.6rem; z-index:2; pointer-events:none; animation:fly linear forwards; }
+  @keyframes fly { from{transform:translateX(-12vw)} to{transform:translateX(115vw)} }
+
+  .cloud { position:fixed; font-size:2.6rem; opacity:.85; z-index:1; pointer-events:none; animation:drift linear infinite; }
+  @keyframes drift { from{transform:translateX(-15vw)} to{transform:translateX(115vw)} }
+
+  .screen {
+    position:fixed; inset:0; z-index:3; display:none; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; padding:28px;
+  }
+  .screen.active { display:flex; animation:fadeIn .8s ease; }
+  @keyframes fadeIn { from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+
+  h1 { font-size:2.2rem; font-weight:700; text-shadow:0 2px 14px rgba(0,0,0,.25); transition:color .8s; }
+  .sub { margin-top:12px; font-size:1.05rem; line-height:1.65; color:#ffe2c8; max-width:330px; transition:color .8s; }
+  .btn {
+    margin-top:28px; padding:15px 34px; font-size:1.1rem; font-weight:600; color:#fff;
+    background:linear-gradient(135deg,#ff9e4a,#ff5f8f); border:none; border-radius:40px;
+    box-shadow:0 6px 24px rgba(255,158,74,.45); cursor:pointer;
+  }
+  .btn:active { transform:scale(.95); }
+
+  /* ---- boot terminali ---- */
+  .term {
+    width:min(340px,90vw); text-align:left; background:rgba(8,6,24,.88); border-radius:14px;
+    padding:20px 18px; font-family:"SF Mono", Menlo, Consolas, monospace; font-size:.82rem;
+    line-height:1.9; color:#8ef0a0; border:1px solid rgba(255,255,255,.12);
+    min-height:230px; box-shadow:0 10px 40px rgba(0,0,0,.35);
+  }
+  .term .warn { color:#ffd166; }
+  .term .pink { color:#ff9ec4; }
+  .cursorBlink { display:inline-block; width:8px; height:14px; background:#8ef0a0; vertical-align:middle; animation:blink 1s steps(1) infinite; }
+  @keyframes blink { 50%{opacity:0} }
+
+  /* ---- kahve ---- */
+  #cupWrap { position:relative; margin-top:26px; cursor:pointer; }
+  #cup {
+    position:relative; width:120px; height:100px; background:rgba(255,255,255,.94);
+    border-radius:8px 8px 46px 46px; overflow:hidden;
+    box-shadow:0 8px 26px rgba(90,50,20,.3);
+  }
+  #cupFill {
+    position:absolute; left:0; right:0; bottom:0; height:0%;
+    background:linear-gradient(180deg,#8a5a3b,#6b4226);
+    transition:height .25s ease; border-radius:0 0 44px 44px;
+  }
+  #cupHandle {
+    position:absolute; right:-34px; top:18px; width:40px; height:46px;
+    border:9px solid rgba(255,255,255,.94); border-radius:50%; border-left:none;
+  }
+  .steam {
+    position:absolute; bottom:105px; width:8px; height:26px; border-radius:8px;
+    background:rgba(255,255,255,.55); opacity:0; filter:blur(3px);
+  }
+  #cupWrap.steaming .steam { animation:rise 1.8s ease-in-out infinite; }
+  .steam:nth-child(1){ left:34px; animation-delay:0s !important; }
+  .steam:nth-child(2){ left:56px; animation-delay:.5s !important; }
+  .steam:nth-child(3){ left:78px; animation-delay:1s !important; }
+  @keyframes rise { 0%{opacity:0; transform:translateY(0)} 40%{opacity:.8} 100%{opacity:0; transform:translateY(-34px)} }
+  #coffeePct { margin-top:14px; font-weight:700; font-size:1.2rem; }
+
+  /* ---- fal ---- */
+  #falCard {
+    margin-top:22px; width:min(320px,86vw); min-height:110px; border-radius:18px;
+    background:rgba(255,255,255,.92); color:#6b4226; padding:22px 20px;
+    font-size:1.05rem; line-height:1.6; font-weight:600;
+    box-shadow:0 10px 30px rgba(90,50,20,.25);
+    display:flex; align-items:center; justify-content:center;
+    animation:fadeIn .5s ease;
+  }
+  #falNote { margin-top:12px; font-size:.85rem; opacity:.85; min-height:20px; }
+
+  /* ---- final ---- */
+  .code {
+    margin-top:22px; text-align:left; background:rgba(8,6,24,.88); border-radius:14px;
+    padding:18px 22px; font-family:"SF Mono", Menlo, Consolas, monospace; font-size:.82rem;
+    line-height:1.75; color:#a5e8b0; border:1px solid rgba(255,255,255,.12);
+  }
+  .code .c { color:#9a8fc5; }
+  .code .k { color:#ff9ec4; }
+  .confetti { position:fixed; z-index:9; pointer-events:none; animation:confFall linear forwards; }
+  @keyframes confFall { from{transform:translateY(-8vh) rotate(0)} to{transform:translateY(110vh) rotate(340deg)} }
+  #finalNote { margin-top:20px; font-size:1.05rem; line-height:1.7; max-width:330px; }
+</style>
+</head>
+<body>
+
+<div id="sun"></div>
+
+<!-- 1: BOOT -->
+<div class="screen active" id="s1">
+  <h1>Günaydın Protokolü ☀️</h1>
+  <div class="term" id="term"><span class="cursorBlink"></span></div>
+  <button class="btn" id="bootBtn" style="display:none" onclick="go('s2'); initSunGame()">Güne Başla 🌅</button>
+</div>
+
+<!-- 2: GÜNEŞİ DOĞUR -->
+<div class="screen" id="s2" style="justify-content:flex-start; padding-top:14vh;">
+  <h1>Güneşi Sen Doğur 🌄</h1>
+  <p class="sub" id="sunHint">Bugün güneş sensiz doğmayı reddetti.<br>Aşağıdaki güneşe arka arkaya dokun!</p>
+</div>
+
+<!-- 3: KAHVE -->
+<div class="screen" id="s3">
+  <h1>Kahve Servisi ☕</h1>
+  <p class="sub" id="coffeeHint">Uzaktan kahve yapabilen tek yazılımcıyım.<br>Fincana dokun dokun, dolduralım.</p>
+  <div id="cupWrap">
+    <span class="steam"></span><span class="steam"></span><span class="steam"></span>
+    <div id="cup"><div id="cupFill"></div></div>
+    <div id="cupHandle"></div>
+  </div>
+  <div id="coffeePct">%0</div>
+</div>
+
+<!-- 4: GÜNÜN FALI -->
+<div class="screen" id="s4">
+  <h1>Günün Falı 🔮</h1>
+  <p class="sub">Kahveni içtin, şimdi fal zamanı.<br>Tamamen rastgele ve tarafsız bir algoritmadır.</p>
+  <div id="falCard">Falına bakmak için butona dokun ☕</div>
+  <div id="falNote"></div>
+  <button class="btn" id="falBtn">Falıma Bak ✨</button>
+  <button class="btn" id="falNext" style="display:none; margin-top:14px" onclick="finale()">Devam 🧡</button>
+</div>
+
+<!-- 5: FİNAL -->
+<div class="screen" id="s5">
+  <h1>Günaydın Özge ☀️</h1>
+  <div class="code">
+<span class="c">// cron: her sabah, gün doğumunda</span><br>
+<span class="k">function</span> gunaydin() {<br>
+&nbsp;&nbsp;<span class="k">const</span> kahve = demle(<span class="k">'sana özel'</span>);<br>
+&nbsp;&nbsp;<span class="k">const</span> ozge = uyan(); <span class="c">// günün en güzel anı</span><br>
+&nbsp;&nbsp;<span class="k">return</span> ozge.gulumseme * <span class="k">Infinity</span>;<br>
+}<br>
+<span class="c">// bu fonksiyon her sabah otomatik çalışır</span><br>
+<span class="c">// ve durdurulamaz. denemeyin. 🔒</span>
+  </div>
+  <p id="finalNote">Umarım rüyaların güzeldi —<br>ama bugünün daha güzel olacağına dair<br>az önce kod yazdım, <b>derlendi bile.</b> ✅<br><br>Kahveni benden say ☕🧡</p>
+</div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ---------- boot terminali ----------
+const bootLines = [
+  '> gunaydin_protokolu v2.6 baslatiliyor...',
+  '> ruya dosyalari kaydedildi 💾',
+  '> guzellik modulu taraniyor... <span class="pink">zaten %100 ✓</span>',
+  '> gulumseme motoru isitiliyor... ✓',
+  '> kahve surucusu araniyor... <span class="warn">bulunamadi ⚠</span>',
+  '> <span class="warn">sorun degil, ben varim.</span>',
+  '> sistem hazir. <span class="pink">Gunaydin, Ozge. ☀</span>',
+];
+const term = document.getElementById('term');
+let li = 0;
+const typer = setInterval(() => {
+  if (li >= bootLines.length) {
+    clearInterval(typer);
+    document.getElementById('bootBtn').style.display = 'inline-block';
+    return;
+  }
+  const cur = term.querySelector('.cursorBlink');
+  const line = document.createElement('div');
+  line.innerHTML = bootLines[li++];
+  term.insertBefore(line, cur);
+}, 750);
+
+// ---------- güneş doğurma ----------
+const sun = document.getElementById('sun');
+const NEEDED = 14;
+let taps = 0, sunDone = false;
+
+// renk geçişi: şafak → sabah
+const dawn = [[28,23,64],[74,42,94],[138,74,110]];
+const day  = [[126,200,247],[168,216,250],[255,227,163]];
+const lerp = (a,b,t) => Math.round(a + (b-a)*t);
+function paintSky(t) {
+  const c = dawn.map((d,i) => `rgb(${lerp(d[0],day[i][0],t)},${lerp(d[1],day[i][1],t)},${lerp(d[2],day[i][2],t)})`);
+  document.body.style.background = `linear-gradient(180deg,${c[0]} 0%,${c[1]} 60%,${c[2]} 100%)`;
+}
+
+function initSunGame() {
+  sun.addEventListener('pointerdown', sunTap);
+}
+function sunTap() {
+  if (sunDone) return;
+  taps++;
+  const t = Math.min(taps / NEEDED, 1);
+  sun.style.animation = 'none';
+  sun.style.bottom = (-8 + t * 43) + 'vh';
+  sun.style.boxShadow = `0 0 ${60+t*80}px ${20+t*30}px rgba(255,190,90,${.45+t*.2})`;
+  paintSky(t);
+  if (t > 0.55) document.body.classList.add('day');
+  if (t >= 1) {
+    sunDone = true;
+    document.getElementById('sunHint').innerHTML =
+      '<b>Gün resmen doğdu ve bunu sen yaptın.</b> 👏<br>Zaten sen uyanmadan sabah olmuş sayılmazdı.';
+    startBirdsAndClouds();
+    setTimeout(() => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = 'Kahve zamanı ☕';
+      btn.onclick = () => { go('s3'); initCoffee(); };
+      document.getElementById('s2').appendChild(btn);
+    }, 1200);
+  }
+}
+function startBirdsAndClouds() {
+  for (let i = 0; i < 3; i++) {
+    const cl = document.createElement('div');
+    cl.className = 'cloud';
+    cl.textContent = '☁️';
+    cl.style.top = (8 + i * 9) + 'vh';
+    cl.style.animationDuration = (40 + i * 18) + 's';
+    cl.style.animationDelay = (-i * 15) + 's';
+    document.body.appendChild(cl);
+  }
+  setInterval(() => {
+    const b = document.createElement('div');
+    b.className = 'bird';
+    b.textContent = Math.random() > .5 ? '🕊️' : '🐦';
+    b.style.top = (6 + Math.random() * 22) + 'vh';
+    b.style.animationDuration = (7 + Math.random() * 6) + 's';
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 14000);
+  }, 3500);
+}
+
+// ---------- kahve ----------
+let coffee = 0, coffeeDone = false;
+function initCoffee() {
+  document.getElementById('cupWrap').addEventListener('pointerdown', () => {
+    if (coffeeDone) return;
+    coffee = Math.min(coffee + 9, 100);
+    document.getElementById('cupFill').style.height = coffee + '%';
+    document.getElementById('coffeePct').textContent = '%' + coffee;
+    if (coffee >= 60) document.getElementById('cupWrap').classList.add('steaming');
+    if (coffee >= 100) {
+      coffeeDone = true;
+      document.getElementById('coffeeHint').innerHTML =
+        '<b>Uyanıklık analizi tamamlandı:</b><br>kahve etkisi %20,<br>bu sayfayı benim yaptığımı bilmek %80 😏';
+      setTimeout(() => {
+        const btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.textContent = 'Falıma bakalım 🔮';
+        btn.onclick = () => go('s4');
+        document.getElementById('s3').appendChild(btn);
+      }, 900);
+    }
+  });
+}
+
+// ---------- günün falı (tamamen tarafsız!) ----------
+const fallar = [
+  'Bugün seni gören herkesin günü %40 daha güzel geçecek. Bilimsel veri. 📊',
+  'Fincanda net bir şekilde görünüyor: bugün biri seni düşünüyor. Kaynak: güvenilir. 👀',
+  'Bugün aynaya baktığında karşındaki kişiye iyi davran, kendisi fazla güzel biri. 🪞',
+  'Yıldızlar diyor ki: gülümsemen bugün en az bir yazılımcının gününü kurtaracak. ⭐',
+  'Falında bir mesaj çıktı: "Günaydın demek için sabahı zor bekledi." İlginç. 🤔',
+  'Bugün şanslı rengin: yanaklarının gülünce aldığı renk. 🌸',
+];
+let falIndex = 0, falCount = 0;
+const shuffled = fallar.sort(() => Math.random() - .5);
+document.getElementById('falBtn').addEventListener('click', () => {
+  const card = document.getElementById('falCard');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'fadeIn .5s ease';
+  card.textContent = shuffled[falIndex % shuffled.length];
+  falIndex++; falCount++;
+  document.getElementById('falBtn').textContent = 'Bir Daha Bak 🔄';
+  document.getElementById('falNext').style.display = 'inline-block';
+  if (falCount === 3) {
+    document.getElementById('falNote').textContent =
+      'Not: Algoritma tamamen tarafsızdır. Sadece tüm sonuçlar seninle ilgili güzel şeyler. Tesadüf. 🤖';
+  }
+});
+
+// ---------- final ----------
+function finale() {
+  go('s5');
+  let n = 0;
+  const rain = setInterval(() => {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.textContent = ['☀️','🌻','🧡','✨','☕','🥐'][Math.floor(Math.random()*6)];
+    c.style.left = Math.random()*95 + 'vw';
+    c.style.fontSize = (1 + Math.random()*1.5) + 'rem';
+    c.style.animationDuration = (2.6 + Math.random()*2) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5200);
+    if (++n > 70) clearInterval(rain);
+  }, 130);
+}
+</script>
+</body>
+</html>
