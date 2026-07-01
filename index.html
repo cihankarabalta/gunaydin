@@ -138,7 +138,7 @@
 <!-- 3: KAHVE -->
 <div class="screen" id="s3">
   <h1>Kahve Servisi ☕</h1>
-  <p class="sub" id="coffeeHint">Uzaktan kahve yapabilen tek yazılımcıyım.<br>Fincana dokun dokun, dolduralım.</p>
+  <p class="sub" id="coffeeHint">Güne kahvesiz başlanmaz, servis benden.<br>Fincana dokun dokun, dolduralım.</p>
   <div id="cupWrap">
     <span class="steam"></span><span class="steam"></span><span class="steam"></span>
     <div id="cup"><div id="cupFill"></div></div>
@@ -152,7 +152,6 @@
   <h1>Günün Falı 🔮</h1>
   <p class="sub">Kahveni içtin, şimdi fal zamanı.<br>Tamamen rastgele ve tarafsız bir algoritmadır.</p>
   <div id="falCard">Falına bakmak için butona dokun ☕</div>
-  <div id="falNote"></div>
   <button class="btn" id="falBtn">Falıma Bak ✨</button>
   <button class="btn" id="falNext" style="display:none; margin-top:14px" onclick="finale()">Devam 🧡</button>
 </div>
@@ -170,7 +169,7 @@
 <span class="c">// bu fonksiyon her sabah otomatik çalışır</span><br>
 <span class="c">// ve durdurulamaz. denemeyin. 🔒</span>
   </div>
-  <p id="finalNote">Umarım rüyaların güzeldi —<br>ama bugünün daha güzel olacağına dair<br>az önce kod yazdım, <b>derlendi bile.</b> ✅<br><br>Kahveni benden say ☕🧡</p>
+  <p id="finalNote">Umarım rüyaların güzeldi —<br>ama asıl güzeli şu:<br><b>bugün, sen uyandığın için güzel geçecek.</b> ☀️<br><br>Kahveni benden say ☕🧡</p>
 </div>
 
 <script>
@@ -276,7 +275,7 @@ function initCoffee() {
     if (coffee >= 100) {
       coffeeDone = true;
       document.getElementById('coffeeHint').innerHTML =
-        '<b>Uyanıklık analizi tamamlandı:</b><br>kahve etkisi %20,<br>bu sayfayı benim yaptığımı bilmek %80 😏';
+        '<b>Uyanıklık analizi tamamlandı:</b><br>kahve etkisi %20,<br>senin gülümsemen %80 ☀️';
       setTimeout(() => {
         const btn = document.createElement('button');
         btn.className = 'btn';
@@ -293,11 +292,11 @@ const fallar = [
   'Bugün seni gören herkesin günü %40 daha güzel geçecek. Bilimsel veri. 📊',
   'Fincanda net bir şekilde görünüyor: bugün biri seni düşünüyor. Kaynak: güvenilir. 👀',
   'Bugün aynaya baktığında karşındaki kişiye iyi davran, kendisi fazla güzel biri. 🪞',
-  'Yıldızlar diyor ki: gülümsemen bugün en az bir yazılımcının gününü kurtaracak. ⭐',
+  'Yıldızlar diyor ki: gülümsemen bugün birinin bütün gününü güzelleştirecek. ⭐',
   'Falında bir mesaj çıktı: "Günaydın demek için sabahı zor bekledi." İlginç. 🤔',
   'Bugün şanslı rengin: yanaklarının gülünce aldığı renk. 🌸',
 ];
-let falIndex = 0, falCount = 0;
+let falIndex = 0;
 const shuffled = fallar.sort(() => Math.random() - .5);
 document.getElementById('falBtn').addEventListener('click', () => {
   const card = document.getElementById('falCard');
@@ -305,13 +304,9 @@ document.getElementById('falBtn').addEventListener('click', () => {
   void card.offsetWidth;
   card.style.animation = 'fadeIn .5s ease';
   card.textContent = shuffled[falIndex % shuffled.length];
-  falIndex++; falCount++;
+  falIndex++;
   document.getElementById('falBtn').textContent = 'Bir Daha Bak 🔄';
   document.getElementById('falNext').style.display = 'inline-block';
-  if (falCount === 3) {
-    document.getElementById('falNote').textContent =
-      'Not: Algoritma tamamen tarafsızdır. Sadece tüm sonuçlar seninle ilgili güzel şeyler. Tesadüf. 🤖';
-  }
 });
 
 // ---------- final ----------
